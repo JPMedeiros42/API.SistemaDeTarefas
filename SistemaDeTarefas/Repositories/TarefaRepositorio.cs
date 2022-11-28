@@ -6,7 +6,7 @@ using SistemaDeTarefas.ViewModels;
 
 namespace SistemaDeTarefas.Repositories
 {
-    public class TarefaRepositorio : IRepositorioBase<Tarefa, CreateTarefaViewModel>
+    public class TarefaRepositorio : IRepositorioBase<Tarefa>
     {
         private readonly AppDbContext _context;
 
@@ -41,15 +41,12 @@ namespace SistemaDeTarefas.Repositories
             return tarefaId;
         }
 
-        public async Task<Tarefa> AdicionarAsync(CreateTarefaViewModel model)
+        public async Task<Tarefa> AdicionarAsync(Tarefa model)
         {
-            Tarefa tarefa = new Tarefa();
+            Tarefa tarefa = new Tarefa(model.Nome,model.Descricao);
 
             if (model.Nome == null || model.Descricao == null)
                 throw new Exception("Nome ou Descricao inválido");
-
-            tarefa.SetNome(model.Nome);
-            tarefa.SetDescricao(model.Descricao);
 
             await _context.Tarefas.AddAsync(tarefa);
             await _context.SaveChangesAsync();
@@ -57,7 +54,7 @@ namespace SistemaDeTarefas.Repositories
             return tarefa;
         }
 
-        public async Task<Tarefa> AtualizarAsync(CreateTarefaViewModel model, int id)
+        public async Task<Tarefa> AtualizarAsync(Tarefa model, int id)
         {
             Tarefa tarefa = await BuscarPorIdAsync(id);
 

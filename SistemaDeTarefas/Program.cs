@@ -14,8 +14,8 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IRepositorioBase<Usuario, CreateUsuarioViewModel>, UsuarioRepositorio>();
-builder.Services.AddScoped<IRepositorioBase<Tarefa, CreateTarefaViewModel>, TarefaRepositorio>();
+builder.Services.AddScoped<IRepositorioBase<Usuario>, UsuarioRepositorio>();
+builder.Services.AddScoped<IRepositorioBase<Tarefa>, TarefaRepositorio>();
 
 var app = builder.Build();
 

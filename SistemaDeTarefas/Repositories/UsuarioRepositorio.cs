@@ -6,7 +6,7 @@ using SistemaDeTarefas.ViewModels;
 
 namespace SistemaDeTarefas.Repositories
 {
-    public class UsuarioRepositorio : IRepositorioBase<Usuario, CreateUsuarioViewModel>
+    public class UsuarioRepositorio : IRepositorioBase<Usuario>
     {
         private readonly AppDbContext _context;
 
@@ -41,15 +41,13 @@ namespace SistemaDeTarefas.Repositories
             return usuarios;
         }
 
-        public async Task<Usuario> AdicionarAsync(CreateUsuarioViewModel model)
+        public async Task<Usuario> AdicionarAsync(Usuario model)
         {
-            Usuario usuario = new Usuario();
 
             if (model.Nome == null || model.Email == null)
                 throw new Exception("Nome ou Email inválido");
 
-            usuario.SetNome(model.Nome);
-            usuario.SetEmail(model.Email);
+            Usuario usuario = new Usuario(model.Nome, model.Email);
 
             await _context.Usuarios.AddAsync(usuario);
             await _context.SaveChangesAsync();
@@ -57,12 +55,13 @@ namespace SistemaDeTarefas.Repositories
             return usuario;
         }
 
-        public async Task<Usuario> AtualizarAsync(CreateUsuarioViewModel model, int id)
+        public async Task<Usuario> AtualizarAsync(Usuario model, int id)
         {
-            Usuario userId = await BuscarPorIdAsync(id);
 
             if (model.Nome == null || model.Email == null)
                 throw new Exception("Nome ou Email inválido");
+
+            Usuario userId = await BuscarPorIdAsync(id);
 
             userId.SetNome(model.Nome);
             userId.SetEmail(model.Email);

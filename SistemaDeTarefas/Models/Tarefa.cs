@@ -18,5 +18,15 @@ namespace SistemaDeTarefas.Models
             Descricao= descricao;
         }
 
+        public Tarefa(string? nome, string? descricao)
+        {
+            Nome = nome;
+            Descricao = descricao;
+        }
+
+        public Tarefa(StatusTarefa status)
+        {
+            Status = status;
+        }
     }
 }
