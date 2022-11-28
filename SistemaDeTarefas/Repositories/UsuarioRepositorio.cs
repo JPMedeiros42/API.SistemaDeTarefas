@@ -6,7 +6,7 @@ using SistemaDeTarefas.ViewModels;
 
 namespace SistemaDeTarefas.Repositories
 {
-    public class UsuarioRepositorio : IUsuarioRepositorio
+    public class UsuarioRepositorio : IRepositorioBase<Usuario, CreateUsuarioViewModel>
     {
         private readonly AppDbContext _context;
 
@@ -15,7 +15,7 @@ namespace SistemaDeTarefas.Repositories
             _context = context;
         }
 
-        public async Task<Usuario> BuscarPorIdAsync(int id)
+       public async Task<Usuario> BuscarPorIdAsync(int id)
         {
             var userId = await _context
                 .Usuarios
@@ -28,7 +28,7 @@ namespace SistemaDeTarefas.Repositories
             return userId;
         }
 
-        public async Task<List<Usuario>> BuscarTodosUsuariosAsync()
+        public async Task<List<Usuario>> BuscarTodosAsync()
         {
             var usuarios = await _context
                 .Usuarios

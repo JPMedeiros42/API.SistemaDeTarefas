@@ -1,7 +1,8 @@
 using SistemaDeTarefas.Data;
+using SistemaDeTarefas.Models;
 using SistemaDeTarefas.Repositories;
 using SistemaDeTarefas.Repositories.Interfaces;
-
+using SistemaDeTarefas.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,8 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IRepositorioBase<Usuario, CreateUsuarioViewModel>, UsuarioRepositorio>();
+builder.Services.AddScoped<IRepositorioBase<Tarefa, CreateTarefaViewModel>, TarefaRepositorio>();
 
 var app = builder.Build();
 
